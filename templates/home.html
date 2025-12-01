@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+
+    <!-- Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { 
+            font-family: 'Inter', 'Roboto', Arial, sans-serif; 
+            background: linear-gradient(120deg, #e6eaff 0%, #f5fafd 100%);
+            margin: 0;
+            min-height:100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            gap: 2.5em;
+            width: 100%;
+            max-width: 1100px;
+            margin-top: 4em;
+        }
+
+        /* Left Column - Todos */
+        .left {
+            width: 60%;
+        }
+
+        /* Right Column - Form */
+        .right {
+            width: 40%;
+            background: #fff;
+            padding: 2em 2.1em 2em 2.1em;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(60,63,94,0.08),
+                        0 1.5px 6px 0 rgba(30,60,160,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+        }
+
+        .todo-item {
+            background: #fafaff;
+            border-radius: 12px;
+            box-shadow: 0 2px 18px rgba(25,48,119,0.07);
+            margin-bottom: 1.5em;
+            padding: 1.3em 1.5em;
+            transition: box-shadow 0.24s;
+            border-left: 5px solid #498fff;
+        }
+        .todo-item:hover {
+            box-shadow: 0 4px 22px rgba(40,72,194,0.13);
+        }
+
+        .todo-title {
+            font-size: 1.26em;
+            color: #193077;
+            font-weight: 700;
+            margin-bottom: 0.38em;
+            letter-spacing: 0.02em;
+            text-shadow: 0 0.3px 0 #c7deff;
+        }
+
+        .todo-meta {
+            font-size: 0.93em;
+            color: #6997bc;
+            margin-top: 0.5em;
+        }
+
+        .todo-status {
+            display: inline-block;
+            font-size: 0.92em;
+            border-radius: 8px;
+            padding: 0.22em 0.85em;
+            background: linear-gradient(90deg, #daeaff 70%, #fdfff3 100%);
+            color: #206c50;
+            font-weight: 600;
+            margin-right: 1em;
+            margin-bottom: 0.08em;
+        }
+        .todo-status.completed {
+            background: linear-gradient(90deg, #c0f6d6 70%, #d9faf2 100%);
+            color: #138540;
+        }
+        .todo-status.not-completed {
+            background: linear-gradient(90deg, #ffe7cc 70%,#fffbe9 100%);
+            color: #c97c38;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.7em;
+            font-size: 1.07em;
+            border-radius: 8px;
+            border: 1.2px solid #bed2ee;
+            margin-bottom: 0.7em;
+            background: #f7faff;
+            transition: border 0.15s;
+            font-family: inherit;
+            resize: none;
+        }
+        input:focus, textarea:focus {
+            border-color: #6fa7f7;
+            outline: none;
+        }
+
+        button {
+            margin-top: 1em;
+            padding: 0.72em 1.7em;
+            background: linear-gradient(90deg, #3f60e9 60%, #56a2ff 100%);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.03em;
+            box-shadow: 0 2px 12px 0 rgba(68,82,191,0.08);
+            letter-spacing: 0.023em;
+            transition: background 0.15s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #2643b7 60%, #328fff 100%);
+        }
+
+        .right h2, .left h2 {
+            color: #2351ad;
+            margin-bottom: 1.1em;
+            margin-top: .4em;
+            letter-spacing: .001em;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: .67em;
+            letter-spacing: 0.02em;
+            font-size: 2.2em;
+            font-family: 'Roboto', Arial, sans-serif;
+            color: #14245b;
+            text-shadow: 0 1px 0 #dae6ff;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                max-width: 600px;
+                gap: 1.8em;
+            }
+            .left, .right {
+                width: 100%;
+            }
+            .right {
+                margin-bottom: 2em;
+            }
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 1.6em;
+                padding: 0 0.4em;
+            }
+            body {
+                margin: 0;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Left Column: Todo List -->
+        <div class="left">
+            <h1>
+                <svg width="32" height="32" style="vertical-align:middle;margin-bottom:6px;margin-right:7px" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="#498fff" stroke-width="2"/>
+                  <path d="M7.5 13l3 3 6-6" stroke="#5284e4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Todo List
+            </h1>
+            <h2>All Todos</h2>
+            <div id="todo-list">
+                <p style="color:#95a1c7">Loading todos...</p>
+            </div>
+        </div>
+
+        <!-- Right Column: Add Todo Form -->
+        <div class="right">
+            <h2>
+                <svg style="vertical-align:middle;margin-bottom:3px;margin-right:5px" width="22" height="22" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="#3f60e9" stroke-width="1.7"/>
+                  <path d="M12 8v8M8 12h8" stroke="#498fff" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>Add New Todo
+            </h2>
+
+            <form id="todo-form" autocomplete="off">
+                <label for="title" style="font-weight: 600; color: #1f3965;">Title <span style="color:#e16046">*</span></label>
+                <input id="title" name="title" placeholder="Todo title..." required maxlength="200" autocomplete="off">
+                <label for="description" style="font-weight: 600; color: #2a549e; margin-top:1em;">Description</label>
+                <textarea id="description" name="description" rows="3" placeholder="Description (optional)"></textarea>
+                <button type="submit">
+                    <svg style="vertical-align:middle;margin-right:5px" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="14" height="2" rx="1" fill="#fff"/>
+                        <rect x="11" y="3" width="2" height="14" rx="1" fill="#fff"/>
+                    </svg>
+                    Add Todo
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const todoListDiv = document.getElementById('todo-list');
+        const form = document.getElementById('todo-form');
+        const titleInput = document.getElementById('title');
+        const descriptionInput = document.getElementById('description');
+
+        // Function to load todos
+        function loadTodos() {
+            fetch('/api/todos/')
+                .then(response => response.json())
+                .then(data => {
+                    todoListDiv.innerHTML = '';
+                    if (data.length === 0) {
+                        todoListDiv.innerHTML = '<p style="color:#aaaab7">No todos available. 🎉</p>';
+                        return;
+                    }
+
+                    data.forEach(todo => {
+                        const todoDiv = document.createElement('div');
+                        todoDiv.className = 'todo-item';
+                        todoDiv.innerHTML = `
+                            <div class="todo-title">${todo.title}</div>
+                            <p style="color: #365187; margin-bottom: 0.3em; margin-top:0;">${todo.description ? todo.description : ''}</p>
+                            <div>
+                                <span class="todo-status ${todo.is_completed ? 'completed' : 'not-completed'}">
+                                    ${todo.is_completed ? 'Completed' : 'Not Completed'}
+                                </span>
+                                <span class="todo-meta">
+                                    <svg width="16" height="16" style="vertical-align:middle;margin-right:1.5px" fill="none" viewBox="0 0 20 20">
+                                        <path d="M6.67 1.67a1.67 1.67 0 0 0-1.67 1.66v13.34c0 .92.75 1.66 1.67 1.66h6.66a1.67 1.67 0 0 0 1.67-1.66V3.33c0-.91-.75-1.66-1.67-1.66H6.67Zm0 0v1.66h6.66V1.67H6.67Z" stroke="#6490bb" stroke-width="1" fill="none"/>
+                                        <rect x="9.25" y="6.75" width="1.5" height="4.5" rx=".7" fill="#6490bb"/>
+                                        <circle cx="10" cy="13.5" r=".9" fill="#d4a765"/>
+                                    </svg>
+                                    <span title="Created">${todo.created_at}</span>
+                                    &nbsp; | &nbsp;
+                                    <svg width="16" height="16" style="vertical-align:middle;margin-right:1.5px" fill="none" viewBox="0 0 20 20">
+                                        <path d="M6.67 1.67a1.67 1.67 0 0 0-1.67 1.66v13.34c0 .92.75 1.66 1.67 1.66h6.66a1.67 1.67 0 0 0 1.67-1.66V3.33c0-.91-.75-1.66-1.67-1.66H6.67Zm0 0v1.66h6.66V1.67H6.67Z" stroke="#6490bb" stroke-width="1" fill="none"/>
+                                        <rect x="9.25" y="6.75" width="1.5" height="4.5" rx=".7" fill="#6490bb"/>
+                                        <rect x="9.5" y="13" width="1" height="1" fill="#6490bb" rx="0.5" />
+                                    </svg> 
+                                    <span title="Updated">${todo.updated_at}</span>
+                                </span>
+                            </div>
+                        `;
+                        todoListDiv.appendChild(todoDiv);
+                    });
+                })
+                .catch(error => {
+                    todoListDiv.innerHTML = '<p style="color:#c04343">Error loading todos.</p>';
+                    console.error(error);
+                });
+        }
+
+        // Load todos when page loads
+        loadTodos();
+
+        // Handle Add Todo Form Submit
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const newTodo = {
+                title: titleInput.value,
+                description: descriptionInput.value
+            };
+
+            fetch('/api/todos/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTodo)
+            })
+            .then(response => response.json())
+            .then(data => {
+                titleInput.value = '';
+                descriptionInput.value = '';
+                loadTodos();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+    });
+    </script>
+
+</body>
+</html>
