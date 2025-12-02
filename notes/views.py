@@ -10,6 +10,11 @@ def home(request):
     return render(request, "home.html")
 
 
+def todo_detail_page(request, pk):
+    todo = Todo.objects.get(pk=pk)
+    return render(request, "todo_detail.html", {"todo": todo})
+
+
 class TodoViewSet(viewsets.ModelViewSet):
     queryset = Todo.objects.all().order_by("-updated_at")
     serializer_class = TodoSerializer

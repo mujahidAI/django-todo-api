@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit To-Do Item</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'css/todo_detail.css' %}">
+</head>
+<body>
+
+    <!-- Main Content Card -->
+    <div class="page-wrapper">
+        <div class="card">
+
+            <h1 class="page-title">Edit To-Do Item</h1>
+
+            <!-- Modal -->
+            <div id="message-modal" class="modal hidden">
+                <div class="modal-content">
+                    <p id="modal-text" class="modal-text"></p>
+                    <div id="modal-actions" class="modal-actions"></div>
+                </div>
+            </div>
+
+            <!-- Todo Form -->
+            <form id="todo-form" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" id="todo-id" value="{{ todo.id }}">
+
+                <div>
+                    <label for="title" class="label">Title</label>
+                    <input type="text" id="title" required class="input-field">
+                </div>
+
+                <div>
+                    <label for="description" class="label">Description (Optional)</label>
+                    <textarea id="description" rows="4" class="textarea-field"></textarea>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="is_completed" class="checkbox">
+                    <label for="is_completed" class="checkbox-label">Completed</label>
+                </div>
+
+                <button type="submit" class="btn-primary">Update To-Do</button>
+            </form>
+
+            <!-- Buttons -->
+            <div class="button-row">
+                <button id="delete-btn" class="btn-danger">Delete</button>
+
+                <a href="/" class="btn-secondary">Back to List</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- External JS -->
+    <script src="{% static 'js/todo_detail.js' %}"></script>
+
+</body>
+</html>
