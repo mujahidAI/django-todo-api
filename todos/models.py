@@ -2,11 +2,13 @@ from django.db import models
 
 # Create your models here.
 
+
 class Todo(models.Model):
     """
     Model representing a todo item with a title, optional description,
     completion status, and timestamps for creation and modification.
     """
+
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     is_completed = models.BooleanField(default=False)

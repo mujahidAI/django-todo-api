@@ -19,8 +19,8 @@ class TodoViewSet(viewsets.ModelViewSet):
     queryset = Todo.objects.all().order_by("-updated_at")
     serializer_class = TodoSerializer
 
-# Use TodoCreateSerializer on create so is_completed is hidden
+    # Use TodoCreateSerializer on create so is_completed is hidden
     def get_serializer_class(self):
         if self.action == "create":
             return TodoCreateSerializer
-        return TodoSerializer   
+        return TodoSerializer

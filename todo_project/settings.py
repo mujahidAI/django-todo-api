@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'notes',
+    'todos',
     'rest_framework',
 ]
 
@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'notes_app.urls'
+ROOT_URLCONF = 'todo_project.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'notes_app.wsgi.application'
+WSGI_APPLICATION = 'todo_project.wsgi.application'
 
 
 # Database
