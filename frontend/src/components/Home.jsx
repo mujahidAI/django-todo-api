@@ -1,3 +1,4 @@
+const API_URL = import.meta.env.VITE_API_URL;
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +19,7 @@ function Home() {
 
   const fetchTodos = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/todos/");
+      const res = await fetch(`${API_URL}/api/todos/`);
       const data = await res.json();
       setTodos(data);
     } catch (err) {
@@ -41,7 +42,7 @@ function Home() {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/api/todos/", {
+      const res = await fetch(`${API_URL}/api/todos/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
