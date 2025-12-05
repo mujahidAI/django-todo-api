@@ -66,4 +66,3 @@ npm run dev  # http://localhost:5173
 ## 📝 Notes
 
 - Todos ordered by most recently updated
-- Commit `.env.example`, never commit `.env`
