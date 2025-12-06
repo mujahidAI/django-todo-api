@@ -26,15 +26,14 @@ frontend/    # React (Vite)
 
 **1. Clone**
 ```bash
-git clone <https://github.com/mujahidAI/django-todo-api>
-cd "Todo App"
+git clone https://github.com/mujahidAI/django-todo-api.git
+cd django-todo-api
 ```
 
 **2. Backend**
 ```bash
-python -m venv venv
-# Activate: venv\Scripts\Activate.ps1 (Windows) or source venv/bin/activate (macOS/Linux)
 cd backend
+python -m venv venv
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver  # http://localhost:8000

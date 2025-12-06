@@ -10,10 +10,8 @@ db.sqlite3
 media/
 staticfiles/
 *.sqlite3
-
 # Environments
 .env
-.env.*
 venv/
 .envrc
 
